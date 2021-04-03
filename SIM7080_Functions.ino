@@ -1,3 +1,8 @@
+
+#include "Adafruit_FONA.h" // https://github.com/botletics/SIM7000-LTE-Shield/tree/master/Code
+
+
+
 const char* myAPN = "hologram";
 const char* mqttURL = "iot.cuspix.com";
 const char* mqttPort = "1883";
@@ -66,7 +71,9 @@ void SIM7080_mqttPubData(String pubTopic,String pubMsg, String urlStr, String po
   
 }
 
-String SIM7080_getDateTime(){
+//Reports Date/Time Network info. rptTyp D=Date, T=Time, B=Both
+//Time includes offset from UTC in Hours
+String SIM7080_getDateTime(char rptTyp, boolean incUtcOff){
   char buffer[23];
   String tString = "";
  
@@ -75,6 +82,37 @@ String SIM7080_getDateTime(){
   tString = String(buffer);
   tString.remove(0,1);
   int x = tString.length();
-  tString.remove(x-1,1);   
-    return tString;      
+  tString.remove(x-1,1);
+  tString.replace(",","_"); 
+   
+    switch(rptTyp){
+      case 'B':{
+        if(incUtcOff == true){
+        return tString;
+        }
+        if(incUtcOff == false){
+        return tString.substring(0,17);
+        }
+      }
+
+     
+
+
+      case 'T':{
+        if(incUtcOff==false){
+          return tString.substring(9,17);          
+        }
+        if(incUtcOff==true){
+          return tString.substring(9,20);          
+        }
+      }
+
+      case 'D': {
+        return tString.substring(0,8);
+      }
+
+      
+}
+
+
 }
