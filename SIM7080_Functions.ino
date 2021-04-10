@@ -28,7 +28,7 @@ String tcpCmdStr= "AT+CASEND=0,"+ String(dataLen);
   fona.sendCheckReply("AT+CASSLCFG=0,\"SSL\",0","OK", 1000);
 
   fona.sendCheckReply(urlStruct,"OK",1000);
-  //fona.sendCheckReply("AT+CAOPEN=0,0,\"TCP\",\"69.137.63.201\",9600","OK",1000);
+  //fona.sendCheckReply("AT+CAOPEN=0,0,\"TCP\",\"xx.xxx.xx.xxx\",xxxx","OK",1000);
   
   fona.sendCheckReply(cmdStruct,">",1000);
   //fona.sendCheckReply("AT+CASEND=0,10",">",1000);
